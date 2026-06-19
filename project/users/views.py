@@ -14,7 +14,10 @@ def user_info(request, user_id):
     try:
         user = Student.objects.get(id__exact = user_id)
     except Student.DoesNotExist:
-        raise Http404("Student doesn\'t exists.\nFix your URL!")
+        template404 = loader.get_template("users/404.html")
+        context = {"user_id": user_id}
+        return HttpResponse(template404.render(context, request), status=404)
+        # raise Http404("Student doesn\'t exists.\nFix your URL!")
     template = loader.get_template("users/index.html")
     context = {"user": user}
     return HttpResponse(template.render(context, request))
