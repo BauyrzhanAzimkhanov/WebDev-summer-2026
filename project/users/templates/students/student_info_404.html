@@ -1,4 +1,39 @@
-<h1>Student not found</h1>
+<!DOCTYPE HTML>
+<html>
 
-<h4 style="color: red; font-style: italic;">User with id {{ user_id }} not found.</h4>
-<p>Please check your input.</p>
+<head>
+    <style>
+        #train {
+            position: relative;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="train" src="https://js.cx/clipart/train.gif">
+
+
+    <script>
+        train.onclick = function () {
+            let start = Date.now();
+
+            let timer = setInterval(function () {
+                let timePassed = Date.now() - start;
+
+                train.style.left = timePassed / 5 + 'px';
+
+                if (timePassed > 2000) clearInterval(timer);
+
+            }, 20);
+        }
+    </script>
+
+    <h1>Student not found</h1>
+
+    <h4 style="color: red; font-style: italic;">User with id {{ user_id }} not found.</h4>
+    <p>Please check your input.</p>
+</body>
+
+</html>
