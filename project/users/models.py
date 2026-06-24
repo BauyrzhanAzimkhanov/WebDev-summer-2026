@@ -1,5 +1,6 @@
 from django.db import models
 
+from branches.models import Faculty
 
 class Student(models.Model):
 
@@ -13,15 +14,16 @@ class Student(models.Model):
     first_name = models.CharField(max_length=20)
     second_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    faculty = models.CharField()
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default=Faculty.get_default_faculty)
     account_balance = models.DecimalField(max_digits=20, decimal_places=6)
 
-class Teacher(models.Model):
+class Teacher(models.Model):    
     employee_id = models.CharField(max_length=20)
     first_name = models.CharField(max_length=20)
     second_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    faculty = models.CharField()
+    # faculty = models.CharField()
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default=Faculty.get_default_faculty)
     salary = models.DecimalField(max_digits=20, decimal_places=6)
 
     def __str__(self):
