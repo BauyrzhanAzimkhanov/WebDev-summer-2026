@@ -2,5 +2,14 @@
     <title>Students</title>
 </head>
 <body>
-    <h1>Hello students</h1>
+    <h1>All students</h1>
+    <ul>
+        {% for student in students %}
+            <li>
+                <a href="{% url 'Student info' student.id %}">{{ student.first_name }} {{ student.last_name }}</a>
+            </li>
+        {% empty %}
+            <li>No student found</li>
+        {% endfor %}
+    </ul>
 </body>

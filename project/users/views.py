@@ -5,7 +5,10 @@ from .models import Student
 from .forms import StudentSearchForm
 
 def index(request):
-    return HttpResponse("<h1>Users page</h1>")
+    students = Student.objects.all()
+    template = loader.get_template("students/index.html")
+    context = {"students": students}
+    return HttpResponse(template.render(context, request))
 
 def user_detalization(request, user_id):
     return HttpResponse("""<h1>User page</h1>
