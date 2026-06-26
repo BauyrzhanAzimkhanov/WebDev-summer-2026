@@ -1,7 +1,8 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import Student
+from .forms import StudentSearchForm
 
 def index(request):
     return HttpResponse("<h1>Users page</h1>")
@@ -23,4 +24,22 @@ def user_info(request, user_id):
     return HttpResponse(template.render(context, request))
 
 def users(requests):
-    return None
+    template = loader.get_template("students/index.html")
+    return HttpResponse(template.render({}, requests))
+
+
+def search_student(request):
+    if request.method == "POST":
+        form = StudentSearchForm(request.POST)
+        if form.is_valid():
+            stud_id = form.cleaned_data["student_id"]
+            try:
+                student = Student.objects.get(student_id=stud_id)
+                return HttpResponseRedirect("../" + str(student.id))
+            except Student.DoesNotExist:
+                return HttpResponse("No student found")
+    else:
+        form = StudentSearchForm()
+    template = loader.get_template("students/search.html")
+    context = {"form": form}
+    return HttpResponse(template.render(context, request))
