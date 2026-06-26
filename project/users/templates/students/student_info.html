@@ -8,7 +8,8 @@
     <h1>User information</h1>
     <h2>Full name: {{ user.first_name }} {{ user.second_name }} {{ user.last_name }}</h2>
     <p>Student ID: {{ user.student_id }}</p>
-    <p>Faculty: {{ user.faculty }}</p>
+    <p>Faculty: {{ user.faculty.name }}</p>
+    <p>Dean: {{ user.faculty.dean.first_name }} {{ user.faculty.dean.last_name }}</p>
     <p>Account balance: {{ user.account_balance }}</p>
 {% else %}
     <h1>There is no such student</h1>
