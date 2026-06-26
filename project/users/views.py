@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import Student
-from .forms import StudentSearchForm
+from .forms import StudentSearchForm, StudentForm
 
 def index(request):
     students = Student.objects.all()
@@ -43,6 +43,19 @@ def search_student(request):
                 return HttpResponse("No student found")
     else:
         form = StudentSearchForm()
-    template = loader.get_template("students/search.html")
-    context = {"form": form}
+        template = loader.get_template("students/search.html")
+        context = {"form": form}
+    return HttpResponse(template.render(context, request))
+
+def add_student(request):
+    if request.method == "POST":
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            stud_id = form.cleaned_data["student_id"]
+            form.save()
+            return HttpResponseRedirect("..")
+    else:
+        form = StudentForm()
+        template = loader.get_template("students/add.html")
+        context = {"form": form}
     return HttpResponse(template.render(context, request))
