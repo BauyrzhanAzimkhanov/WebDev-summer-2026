@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL =  "/students/login/"
+LOGIN_REDIRECT_URL = "/students/"
 
 # Application definition
 

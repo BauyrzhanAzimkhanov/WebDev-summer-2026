@@ -1,4 +1,8 @@
 <header>WebDev summer 2026</header>
+<form action="{% url 'User logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
 {% block content %}
 {% endblock %}
 <footer>KBTU, Alamty, 2026</footer>

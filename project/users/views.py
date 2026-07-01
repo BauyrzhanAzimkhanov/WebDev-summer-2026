@@ -1,9 +1,10 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
-
+from django.contrib.auth.decorators import login_required
 from .models import Student
 from .forms import StudentSearchForm, StudentForm
 
+@login_required   
 def index(request):
     students = Student.objects.all()
     template = loader.get_template("students/index.html")
@@ -13,7 +14,8 @@ def index(request):
 def user_detalization(request, user_id):
     return HttpResponse("""<h1>User page</h1>
                         Current user is with id %s""" % user_id)
-                        
+
+@login_required                        
 def user_info(request, user_id):
     try:
         user = Student.objects.get(id__exact = user_id)
@@ -30,7 +32,7 @@ def users(requests):
     template = loader.get_template("students/index.html")
     return HttpResponse(template.render({}, requests))
 
-
+@login_required   
 def search_student(request):
     if request.method == "POST":
         form = StudentSearchForm(request.POST)
@@ -47,6 +49,7 @@ def search_student(request):
         context = {"form": form}
     return HttpResponse(template.render(context, request))
 
+@login_required   
 def add_student(request):
     if request.method == "POST":
         form = StudentForm(request.POST)
