@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from .models import Student
 from .forms import StudentSearchForm, StudentForm
 
@@ -60,5 +61,19 @@ def add_student(request):
     else:
         form = StudentForm()
         template = loader.get_template("students/add.html")
+        context = {"form": form}
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("../login")
+    else:
+        form = UserCreationForm()
+        template = loader.get_template("users/registration.html")
         context = {"form": form}
     return HttpResponse(template.render(context, request))
